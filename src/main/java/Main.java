@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
 import java.io.*;
 import java.lang.reflect.Type;
 import java.net.ServerSocket;
@@ -20,6 +21,7 @@ public class Main {
                      PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                      BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
                     String word = in.readLine();
+                    System.out.println("Запрос на поиск '" + word + "'");
                     List<PageEntry> answer = engine.search(word);
                     GsonBuilder builder = new GsonBuilder();
                     Gson gson = builder.create();
@@ -27,6 +29,7 @@ public class Main {
                     }.getType();
                     String result = gson.toJson(answer, listType);
                     out.println(result);
+                    System.out.println("Ответ: " + result);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

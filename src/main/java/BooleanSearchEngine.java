@@ -2,6 +2,7 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -34,10 +35,12 @@ public class BooleanSearchEngine implements SearchEngine {
 
     @Override
     public List<PageEntry> search(String word) {
-        List<PageEntry> answer = answers.get(word);
-        if (!answer.isEmpty()) {
+        List<PageEntry> answer = answers.get(word.toLowerCase());
+        if (answer != null) {
             Collections.sort(answer);
+            return answer;
+        } else {
+            return new ArrayList<>();
         }
-        return answer;
     }
 }
